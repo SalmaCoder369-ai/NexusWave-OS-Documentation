@@ -1,91 +1,65 @@
-# NexusWave OS — System Design Overview
+# **NexusWave OS Design Overview**
 
-## Design Goals
+## **System Philosophy**
 
-NexusWave OS is designed to provide infrastructure-level guarantees for autonomous AI systems.
+NexusWave OS is designed as an orchestration kernel rather than an agent framework.
 
-Primary goals:
-
-Deterministic execution  
-Recoverable persistent state  
-Explicit agent coordination  
-Governance and safety by default  
-Observability at every step  
+Its role is to provide deterministic control, durable state, and governed coordination for autonomous systems.
 
 ---
 
-## Kernel-Centric Architecture
+## **Design Objectives**
 
-At the center of the system is the orchestration kernel.
-
-The kernel is responsible for:
-
-Executing bounded scheduling cycles  
-Persisting all system state  
-Coordinating agent interactions  
-Enforcing execution limits  
-Producing structured signals  
-
-Agents never run freely.  
-All actions are mediated by the kernel.
+Reliability under long execution horizons
+Full observability of every action
+Crash safety and replayability
+Strict agent responsibility boundaries
+Predictable scheduling behavior
 
 ---
 
-## Agent Model
+## **Core Components**
 
-Agents operate as specialized system components.
+Kernel
+Controls lifecycle, scheduling, and enforcement
 
-Observer  
-Responsible for monitoring state and producing structured signals.
+Observer
+Produces structured system signals
 
-Planner  
-Responsible for decomposing goals into executable tasks.
+Planner
+Transforms goals into executable tasks
 
-Executor  
-Responsible for performing tasks within governed limits.
+Executor
+Runs tasks under kernel control
 
-Each agent interacts only through kernel-managed state.
-
----
-
-## Determinism and Safety
-
-Every kernel invocation:
-
-Executes a single bounded step  
-Persists results  
-Produces observable signals  
-Enforces execution quotas  
-
-This ensures:
-
-No runaway execution  
-Full auditability  
-Crash recovery  
-Predictable behavior  
+State Engine
+Persists system reality across runs
 
 ---
 
-## Scalability Path
+## **Execution Model**
 
-The architecture is designed to extend toward:
+Each kernel invocation performs exactly one controlled progression step.
 
-Distributed execution  
-Fault isolation  
-Multi-node scheduling  
-External API control  
-
-Without breaking determinism or safety.
+No background loops. No uncontrolled autonomy.
 
 ---
 
-## Design Philosophy
+## **Failure Handling Philosophy**
 
-Autonomy must be engineered as infrastructure.
+Failures are surfaced as state, not hidden as logs.
 
-Not scripts.  
-Not uncontrolled loops.  
-Not best-effort execution.
+The system always resumes from known truth.
 
-NexusWave OS treats autonomous agents as governed system processes.
+---
+
+## **Governance First Architecture**
+
+Every action is inspectable.
+Every transition is recorded.
+Every agent is constrained.
+
+---
+
+Detailed internals are intentionally separated from public documentation.
 

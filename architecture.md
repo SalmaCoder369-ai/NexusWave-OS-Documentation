@@ -1,33 +1,53 @@
-                                                  # NexusWave OS — Architecture Diagram
+# **NexusWave OS Architecture**
 
-## High Level Flow
+## **High Level System View**
 
-                +----------------+
-                |   Observer     |
-                |  (Signals)     |
-                +-------+--------+
-                        |
-                        v
-+--------------------------------------------------+
-|                  Kernel                          |
-|                                                  |
-|  Scheduling  |  State  |  Quotas  |  Governance  |
-+------------------+-------------------------------+
-                   |
-                   v
-            +--------------+
-            |   Planner    |
-            |  (Goals →    |
-            |   Tasks)     |
-            +------+-------+
-                   |
-                   v
-            +--------------+
-            |  Executor    |
-            | (Execution) |
-            +--------------+
+```
+User Goals
+   │
+   ▼
+Planner ──▶ Task Graph
+   │
+   ▼
+Kernel Scheduler
+   │
+   ▼
+Executor ──▶ Results
+   │
+   ▼
+Persistent State Engine
+   ▲
+   │
+Observer Signals
+```
 
-All actions pass through the kernel.
-State is persisted after every step.
-Signals are emitted continuously.
+---
+
+## **Component Responsibilities**
+
+Kernel
+Orchestration control and safety enforcement
+
+Observer
+Structured system telemetry and events
+
+Planner
+Goal decomposition and planning logic
+
+Executor
+Controlled task execution
+
+State Engine
+Durable truth storage
+
+---
+
+## **Future Visual Diagram Plan**
+
+Planned additions:
+
+Clean layered system diagram
+Agent interaction flow charts
+Failure recovery sequence views
+Distributed node topology
 
