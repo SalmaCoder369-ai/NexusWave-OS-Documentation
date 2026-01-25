@@ -1,149 +1,89 @@
-NexusWave-OS-Documentation
+NexusWave OS
 
-Public documentation and specs for NexusWave OS
+NexusWave OS is a deterministic orchestration kernel for autonomous AI agent systems.
 
-# NexusWave OS
+It provides a controlled execution substrate where agents operate as governed system components with persistent state, bounded execution, and full observability.
 
-NexusWave OS is a deterministic orchestration kernel for autonomous AI agents, designed as a foundation for reliable, scalable, and auditable multi-agent systems.
-
-It treats AI agents not as scripts, but as operating-system–level entities with controlled execution, persistent state, and governed coordination.
+NexusWave OS is designed as infrastructure for long running, production grade autonomous systems.
 
 ---
 
-## Why NexusWave OS Exists
+What Problem It Solves
 
-Modern AI systems increasingly rely on multiple autonomous agents—planners, observers, executors, evaluators—working together to achieve complex goals.
+Modern AI systems increasingly rely on multiple autonomous agents working together across planning, execution, monitoring, and evaluation.
 
-Most existing frameworks:
+Most existing agent frameworks:
 
-- Execute agents opportunistically
-- Lack deterministic scheduling
-- Provide limited observability
-- Fail silently under scale or partial failure
+Execute opportunistically  
+Lack deterministic scheduling  
+Provide weak observability  
+Fail silently under partial failure  
 
-NexusWave OS is built to solve these problems at the **kernel level**, not through ad-hoc orchestration logic.
-
----
-
-## Core Design Principles
-
-### 1. Deterministic Execution
-
-Every kernel invocation performs a bounded, predictable unit of work.
-
-- No runaway loops
-- No hidden background execution
-- No uncontrolled retries
-
-This makes the system:
-
-- Debuggable
-- Auditable
-- Production-safe
+NexusWave OS introduces operating system level guarantees for autonomous AI.
 
 ---
 
-### 2. Explicit Agent Roles
+Core Capabilities
 
-Agents are first-class system components with clearly defined responsibilities.
-
-Typical roles include:
-
-- **Observer** — structured signal emission and system visibility
-- **Planner** — goal decomposition and task generation
-- **Executor** — controlled task execution with enforced limits
-
-Each agent operates under strict contracts enforced by the kernel.
+Deterministic kernel execution cycles  
+Explicit agent roles and coordination  
+Persistent recoverable system state  
+Structured observability and signals  
+Governed autonomy with execution limits  
 
 ---
 
-### 3. Persistent Kernel State
+Architecture Model
 
-All kernel progress is persisted across runs.
+The system follows a kernel supervised multi agent architecture.
 
-This enables:
+Kernel responsibilities:
 
-- Crash recovery
-- Deterministic step replay
-- Long-horizon execution without loss of context
-- Explicit execution accounting per task
+Execution scheduling  
+State persistence  
+Agent coordination  
+Governance and safety enforcement  
 
-The kernel never “forgets” where it was.
+Agent roles:
 
----
+Observer for signals and monitoring  
+Planner for goal and task generation  
+Executor for controlled task execution  
 
-### 4. Human-in-the-Loop Ready
-
-The system is designed for supervision, intervention, and governance at any point.
-
-Autonomy is **controlled**, observable, and interruptible by design.
+All progress occurs in bounded kernel steps.
 
 ---
 
-## What NexusWave OS Is (and Is Not)
+Why It Matters
 
-### NexusWave OS **is**:
+NexusWave OS enables:
 
-- A kernel-level orchestration system
-- Infrastructure for autonomous AI platforms
-- A foundation for long-running, stateful AI workflows
+Reliable autonomous workflows  
+Auditability and replayability  
+Crash recovery by design  
+Safe scaling of agent systems  
 
-### NexusWave OS **is not**:
-
-- A chatbot framework
-- A prompt library
-- A toy agent loop
-- An experimental demo system
+It treats autonomy as infrastructure, not scripts.
 
 ---
 
-## Current Status
+Current Status
 
-The kernel currently implements:
+Implemented foundations include:
 
-- Deterministic kernel lifecycle execution
-- Explicit kernel step progression across runs
-- Persistent state storage with recovery guarantees
-- Structured observer signals with severity levels
-- Controlled task execution with execution accounting
-- Safe termination with zero hidden background work
+Deterministic kernel lifecycle  
+Persistent system state  
+Agent coordination loop  
+Structured observability signals  
+Execution quotas and safety limits  
 
-This represents a **stable, auditable orchestration core**.
-
----
-
-## Roadmap (High-Level)
-
-Planned capabilities include:
-
-- Execution quotas and policy enforcement
-- Fault isolation and retry strategies
-- Agent-level permissions and sandboxing
-- External API gateways
-- Distributed execution across nodes
-
-All capabilities are introduced incrementally with strict correctness guarantees.
+This forms a stable orchestration core.
 
 ---
 
-## Repository Scope
+Vision
 
-This repository contains:
-
-- Public documentation
-- Architectural specifications
-- Design philosophy
-
-Core kernel internals and advanced execution layers are maintained privately at this stage.
-
----
-
-## Vision
-
-NexusWave OS aims to become the operating substrate for autonomous AI systems—where reliability, control, and scalability are non-negotiable.
+NexusWave OS aims to become the operating substrate for autonomous AI systems where reliability, control, and scalability are mandatory.
 
 As AI systems grow more powerful, the infrastructure beneath them must grow more disciplined.
-
-NexusWave OS is built for that future.
-
 
