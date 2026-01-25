@@ -1,37 +1,33 @@
-NexusWave OS Architecture
+                                                  # NexusWave OS — Architecture Diagram
 
-High level system structure:
+## High Level Flow
 
-+--------------------+
-|     Kernel Core    |
-|--------------------|
-| Scheduler          |
-| State Manager      |
-| Governance Layer   |
-+---------+----------+
-          |
-          v
-+--------------------+
-|     Agents         |
-|--------------------|
-| Observer           |
-| Planner            |
-| Executor           |
-+---------+----------+
-          |
-          v
-+--------------------+
-| Persistent Storage |
-+--------------------+
+                +----------------+
+                |   Observer     |
+                |  (Signals)     |
+                +-------+--------+
+                        |
+                        v
++--------------------------------------------------+
+|                  Kernel                          |
+|                                                  |
+|  Scheduling  |  State  |  Quotas  |  Governance  |
++------------------+-------------------------------+
+                   |
+                   v
+            +--------------+
+            |   Planner    |
+            |  (Goals →    |
+            |   Tasks)     |
+            +------+-------+
+                   |
+                   v
+            +--------------+
+            |  Executor    |
+            | (Execution) |
+            +--------------+
 
-Execution Flow:
-
-Signals -> Observer -> Kernel  
-State -> Planner -> Kernel  
-Tasks -> Executor -> Kernel  
-Kernel -> Persistent State  
-
-All progress occurs in bounded kernel steps.
-
-Determinism and recoverability are enforced at the kernel level.
+All actions pass through the kernel.
+State is persisted after every step.
+Signals are emitted continuously.
 
