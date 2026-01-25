@@ -1,4 +1,6 @@
-NexusWave OS
+# NexusWave OS
+
+## Deterministic Orchestration Kernel for Autonomous AI Systems
 
 NexusWave OS is a deterministic orchestration kernel for autonomous AI agent systems.
 
@@ -8,7 +10,7 @@ NexusWave OS is designed as infrastructure for long running, production grade au
 
 ---
 
-What Problem It Solves
+## What Problem It Solves
 
 Modern AI systems increasingly rely on multiple autonomous agents working together across planning, execution, monitoring, and evaluation.
 
@@ -23,7 +25,7 @@ NexusWave OS introduces operating system level guarantees for autonomous AI.
 
 ---
 
-Core Capabilities
+## Core Capabilities
 
 Deterministic kernel execution cycles  
 Explicit agent roles and coordination  
@@ -33,18 +35,18 @@ Governed autonomy with execution limits
 
 ---
 
-Architecture Model
+## Architecture Model
 
 The system follows a kernel supervised multi agent architecture.
 
-Kernel responsibilities:
+### Kernel responsibilities
 
 Execution scheduling  
 State persistence  
 Agent coordination  
 Governance and safety enforcement  
 
-Agent roles:
+### Agent roles
 
 Observer for signals and monitoring  
 Planner for goal and task generation  
@@ -54,7 +56,7 @@ All progress occurs in bounded kernel steps.
 
 ---
 
-Why It Matters
+## Why It Matters
 
 NexusWave OS enables:
 
@@ -67,7 +69,7 @@ It treats autonomy as infrastructure, not scripts.
 
 ---
 
-Current Status
+## Current Status
 
 Implemented foundations include:
 
@@ -81,7 +83,7 @@ This forms a stable orchestration core.
 
 ---
 
-Vision
+## Vision
 
 NexusWave OS aims to become the operating substrate for autonomous AI systems where reliability, control, and scalability are mandatory.
 
