@@ -1,65 +1,137 @@
-# **NexusWave OS Design Overview**
+# NexusWaveOS — System Design
 
-## **System Philosophy**
+## Architectural Positioning
 
-NexusWave OS is designed as an orchestration kernel rather than an agent framework.
+NexusWaveOS is structured as a kernel-inspired orchestration substrate. The system models AI workloads using concepts traditionally associated with operating system design rather than application-layer automation.
 
-Its role is to provide deterministic control, durable state, and governed coordination for autonomous systems.
-
----
-
-## **Design Objectives**
-
-Reliability under long execution horizons
-Full observability of every action
-Crash safety and replayability
-Strict agent responsibility boundaries
-Predictable scheduling behavior
+This framing enables predictable execution, resilience, and controlled scaling.
 
 ---
 
-## **Core Components**
+## Core Design Objectives
 
-Kernel
-Controls lifecycle, scheduling, and enforcement
+1. **Execution Determinism**
+   State transitions must be reproducible.
 
-Observer
-Produces structured system signals
+2. **Failure Containment**
+   Errors must not cascade across tasks or workers.
 
-Planner
-Transforms goals into executable tasks
+3. **Crash-Safe Recovery**
+   System continuity must not depend on memory.
 
-Executor
-Runs tasks under kernel control
+4. **Lifecycle Awareness**
+   Work must be modeled using explicit states.
 
-State Engine
-Persists system reality across runs
-
----
-
-## **Execution Model**
-
-Each kernel invocation performs exactly one controlled progression step.
-
-No background loops. No uncontrolled autonomy.
+5. **Scalable Coordination**
+   Scheduling must remain stable under load growth.
 
 ---
 
-## **Failure Handling Philosophy**
+## Kernel Concepts Applied
 
-Failures are surfaced as state, not hidden as logs.
+### Task Lifecycle Engine
 
-The system always resumes from known truth.
+Tasks progress through defined states:
+
+* queued
+* running
+* success
+* failed
+* blocked
+
+This mirrors process state modeling in traditional kernels.
 
 ---
 
-## **Governance First Architecture**
+### Priority Scheduler
 
-Every action is inspectable.
-Every transition is recorded.
-Every agent is constrained.
+Scheduling decisions incorporate:
+
+* Task priority
+* Dependency resolution
+* Worker availability
+* Fault history
+
+The scheduler functions as a resource arbitration mechanism rather than a simple queue processor.
 
 ---
 
-Detailed internals are intentionally separated from public documentation.
+### Journaling Layer (Write-Ahead Log)
+
+State mutation discipline:
+
+1. Persist intent to journal
+2. Apply state transition
+
+Properties:
+
+* Crash-safe recovery
+* Deterministic replay
+* Execution auditability
+* Temporal debugging
+
+---
+
+### Fault Isolation & Retries
+
+Failure management:
+
+* Per-task retry budgets
+* Worker failure tracking
+* Adaptive rescheduling
+* Containment boundaries
+
+---
+
+### Distributed Worker Model
+
+Execution is externalized:
+
+* Kernel → coordination & control
+* Workers → computation & execution
+
+Benefits:
+
+* Horizontal scaling
+* Failure compartmentalization
+* Execution parallelism
+
+---
+
+## Autonomous Behavior Model
+
+NexusWaveOS reduces human dependency by embedding:
+
+* Recovery logic
+* Retry policies
+* Scheduling decisions
+* Health enforcement
+
+Human interaction shifts from operational intervention → strategic supervision.
+
+---
+
+## Observability Strategy
+
+System events are treated as first-class objects:
+
+* Execution intent
+* Acknowledgements
+* Failures
+* Retries
+* Recovery events
+
+This enables deterministic reconstruction and forensic debugging.
+
+---
+
+## Security & Abstraction Strategy
+
+Public materials deliberately:
+
+* Avoid exposing execution algorithms
+* Avoid publishing sensitive heuristics
+* Avoid revealing internal optimizations
+
+The goal is architectural clarity without implementation leakage.
 

@@ -1,63 +1,101 @@
-# **NexusWave OS**
+# NexusWaveOS
 
-## **Deterministic Orchestration Kernel for Autonomous AI Systems**
+## Overview
 
-NexusWave OS is a kernel-level orchestration system designed to run autonomous AI agents with reliability, auditability, and long-horizon stability.
+NexusWaveOS is a distributed orchestration kernel designed to manage, coordinate, and stabilize AI-driven workloads across heterogeneous execution environments. Rather than functioning as an application, framework, or agent, NexusWaveOS operates as a control layer responsible for execution integrity, failure resilience, and lifecycle-aware task progression.
 
-It treats agents as operating-system entities with governed execution, persistent state, and deterministic control.
-
----
-
-## **Why NexusWave OS Exists**
-
-Modern AI platforms increasingly rely on multiple agents working together: planners, observers, executors, evaluators.
-
-Most frameworks today:
-
-• Execute non-deterministically
-• Lack deep observability
-• Break under partial failure
-• Lose state across runs
-
-NexusWave OS is built as infrastructure, not a demo loop.
+The system is engineered to support autonomous operational behavior, enabling intelligent workflows to execute, recover, and adapt without continuous human intervention.
 
 ---
 
-## **Core Principles**
+## Problem Space
 
-### Deterministic Execution
+Modern AI systems face structural limitations:
 
-Each kernel cycle performs a bounded, predictable unit of work.
+* Agent loops lack reliability guarantees
+* Execution failures propagate unpredictably
+* Workflow state becomes inconsistent after crashes
+* Scaling introduces coordination instability
+* Observability is fragmented across tools
 
-### Explicit Agent Roles
-
-Agents operate through enforced contracts within the kernel.
-
-### Persistent System State
-
-All goals, tasks, and results survive restarts.
-
-### Governance Ready
-
-Human oversight is supported by design.
+As AI moves from experimentation to production, orchestration reliability becomes a primary bottleneck.
 
 ---
 
-## **Current Capabilities**
+## What NexusWaveOS Provides
 
-Kernel lifecycle management
-Deterministic step execution
-Planner to Executor coordination
-Persistent state engine
-Safe termination model
+NexusWaveOS introduces kernel-level execution discipline:
+
+* Deterministic task lifecycle management
+* Priority & dependency-aware scheduling
+* Crash-safe journaling & replay recovery
+* Fault containment & retry isolation
+* Distributed worker coordination
+* Health monitoring & worker fencing
+
+The system treats AI workloads as managed processes rather than ephemeral agent actions.
 
 ---
 
-## **Vision**
+## Autonomous Execution Model
 
-NexusWave OS aims to become the operating substrate for serious autonomous AI systems where reliability and control are mandatory.
+NexusWaveOS is designed for minimal human dependency.
+
+Core behaviors:
+
+* Automatic recovery from failure states
+* Journal-driven state reconstruction
+* Adaptive task rescheduling
+* Worker health enforcement
+* Deterministic execution continuity
+
+This architecture enables long-running intelligent systems to operate with OS-like stability characteristics.
 
 ---
 
-See DESIGN.md for system philosophy and ARCHITECTURE.md for high-level structure.
+## Target Use Cases
+
+NexusWaveOS is intended for environments where execution reliability is critical:
+
+* AI-native infrastructure platforms
+* Autonomous agent systems
+* Multi-model coordination layers
+* Distributed inference pipelines
+* Resilient automation backends
+
+---
+
+## Why NexusWaveOS
+
+NexusWaveOS addresses foundational gaps not solved by models or IDE agents:
+
+| Traditional Systems        | NexusWaveOS                     |
+| -------------------------- | ------------------------------- |
+| Tool-centric orchestration | Kernel-centric orchestration    |
+| Best-effort execution      | Deterministic execution control |
+| Limited crash recovery     | Journal-based replay recovery   |
+| Manual failure handling    | Built-in fault containment      |
+| Fragmented coordination    | Unified execution substrate     |
+
+The system focuses on execution integrity rather than model capability.
+
+---
+
+## Design Philosophy
+
+NexusWaveOS follows principles inspired by operating system architecture:
+
+* State must be reconstructable
+* Failures must be isolated
+* Scheduling must be deterministic
+* Execution must be observable
+* Recovery must be guaranteed
+
+---
+
+## Documentation Scope
+
+Public documentation intentionally abstracts implementation specifics while conveying architectural intent and system design rationale.
+
+For deeper technical discussions, refer to DESIGN.md and architecture.md.
 
