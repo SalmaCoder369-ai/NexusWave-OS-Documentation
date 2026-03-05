@@ -1,6 +1,6 @@
 # NexusWaveOS — Distributed AI Operating System Kernel Layer.
 
-![License](https://img.shields.io/badge/license-MIT-blue)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Documentation](https://img.shields.io/badge/docs-available-brightgreen)
 ![Project Status](https://img.shields.io/badge/status-active_development-orange)
 
