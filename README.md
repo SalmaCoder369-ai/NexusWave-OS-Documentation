@@ -236,7 +236,7 @@ Additional documentation is available in the repository.
 The following diagram illustrates the high-level control and execution separation within NexusWaveOS.
 
 
-![NexusWaveOS System Architecture](docs/assets/NexusWaveOS%20System%20Architecture.png) 
+<img src="docs/assets/nexuswaveos-system-architecture.png" alt="NexusWaveOS System Architecture" width="900" /> 
 
 
 The control plane is responsible for deterministic coordination, lifecycle management, and state authority, while distributed workers focus exclusively on computation and tool execution.
