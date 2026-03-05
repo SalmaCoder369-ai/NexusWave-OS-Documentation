@@ -49,6 +49,17 @@ This framing enables:
 * bounded failure domains
 * stable scaling across distributed infrastructure
 
+
+---
+# Documentation
+
+The repository documentation is organized as follows:
+
+* `README.md` — project overview and system introduction  
+* `architecture.md` — system topology and component structure  
+* `DESIGN.md` — design rationale and architectural principles  
+* `PHILOSOPHY.md` — engineering philosophy behind the system
+
 ---
 
 # Core Design Objectives
@@ -219,15 +230,6 @@ Public materials therefore:
 * avoid revealing internal optimizations
 
 The objective is to provide architectural transparency while protecting critical implementation details.
-
----
-
-# Documentation
-
-Additional documentation is available in the repository.
-
-* `architecture.md` — system topology and component structure  
-* `DESIGN.md` — design rationale and architectural principles
 
 ---
 
