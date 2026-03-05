@@ -255,6 +255,28 @@ The control plane is responsible for deterministic coordination, lifecycle manag
 
 Observability components provide operational insight without mutating system state, preserving deterministic replay and auditability.
 
+
+---
+
+
+# Repository Structure
+
+The repository is organized as follows:
+
+```
+NexusWave-OS-Documentation
+│
+├── README.md
+├── architecture.md
+├── DESIGN.md
+├── PHILOSOPHY.md
+│
+└── docs
+    └── assets
+        └── NexusWaveOS System Architecture.png
+```
+
+
 # Project Status
 
 NexusWaveOS is under active development.
