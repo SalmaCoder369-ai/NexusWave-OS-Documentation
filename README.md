@@ -235,8 +235,18 @@ Additional documentation is available in the repository.
 
 The following diagram illustrates the high-level control and execution separation within NexusWaveOS.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/NexusWaveOS%20System%20Architecture.png">
+  <img
+    alt="NexusWaveOS System Architecture"
+    src="docs/assets/NexusWaveOS%20System%20Architecture.png"
+    width="900"
+  />
+</picture>
 
-<img src="docs/assets/nexuswaveos-system-architecture.png" alt="NexusWaveOS System Architecture" width="900" /> 
+<p>
+  <a href="docs/assets/NexusWaveOS%20System%20Architecture.png">Open full-size</a>
+</p>
 
 
 The control plane is responsible for deterministic coordination, lifecycle management, and state authority, while distributed workers focus exclusively on computation and tool execution.
@@ -249,7 +259,7 @@ NexusWaveOS is under active development.
 
 The current focus is building the kernel runtime and validating deterministic execution behavior in distributed environments.
 
-Long-Term Direction
+# Long-Term Direction
 
 The long-term goal of NexusWaveOS is to provide a reliable control layer for autonomous AI systems, enabling organizations to safely deploy AI agents and automated workflows in production environments. 
 
