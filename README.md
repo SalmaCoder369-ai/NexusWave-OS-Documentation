@@ -236,14 +236,14 @@ Additional documentation is available in the repository.
 The following diagram illustrates the high-level control and execution separation within NexusWaveOS.
 
 
-
+![NexusWaveOS System Architecture](docs/assets/NexusWaveOS%20System%20Architecture.png) 
 
 
 The control plane is responsible for deterministic coordination, lifecycle management, and state authority, while distributed workers focus exclusively on computation and tool execution.
 
 Observability components provide operational insight without mutating system state, preserving deterministic replay and auditability.
 
-Project Status
+# Project Status
 
 NexusWaveOS is under active development.
 
