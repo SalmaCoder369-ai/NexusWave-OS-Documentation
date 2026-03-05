@@ -2,36 +2,87 @@
 
 ## Architectural Positioning
 
-NexusWaveOS is structured as a kernel-inspired orchestration substrate. The system models AI workloads using concepts traditionally associated with operating system design rather than application-layer automation.
+NexusWaveOS is designed as a **distributed AI operating system kernel layer**.
 
-This framing enables predictable execution, resilience, and controlled scaling.
+Instead of treating AI workflows as application-level automation, NexusWaveOS models them using concepts traditionally associated with operating systems.
 
----
+Autonomous AI tasks are treated similarly to processes inside an operating system.  
+The kernel coordinates execution, manages lifecycle transitions, and enforces system stability.
 
-## Core Design Objectives
+This architectural approach enables:
 
-1. **Execution Determinism**
-   State transitions must be reproducible.
+* predictable execution behavior
+* controlled failure domains
+* crash-safe recovery
+* stable coordination across distributed infrastructure
 
-2. **Failure Containment**
-   Errors must not cascade across tasks or workers.
-
-3. **Crash-Safe Recovery**
-   System continuity must not depend on memory.
-
-4. **Lifecycle Awareness**
-   Work must be modeled using explicit states.
-
-5. **Scalable Coordination**
-   Scheduling must remain stable under load growth.
+By applying kernel design principles to AI workloads, NexusWaveOS provides a reliable control layer for autonomous AI systems operating in production environments.
 
 ---
 
-## Kernel Concepts Applied
+# Core Design Objectives
 
-### Task Lifecycle Engine
+The system is guided by several fundamental design goals.
 
-Tasks progress through defined states:
+## 1. Execution Determinism
+
+System state transitions must be reproducible.
+
+Given the same sequence of recorded events, the system must always reconstruct the same state.
+
+Determinism enables reliable debugging, recovery, and auditing of autonomous workflows.
+
+---
+
+## 2. Failure Containment
+
+Failures must remain localized.
+
+Errors originating in one task or worker should not cascade across the broader system.
+
+Explicit containment boundaries prevent systemic instability.
+
+---
+
+## 3. Crash-Safe Recovery
+
+System continuity must never depend on volatile memory.
+
+All important state transitions are persisted before execution occurs.
+
+This allows the system to recover safely after crashes or restarts.
+
+---
+
+## 4. Lifecycle Awareness
+
+Work within the system must follow explicit lifecycle states.
+
+Tasks move through defined transitions that make orchestration predictable and observable.
+
+This approach mirrors process lifecycle modeling used in traditional operating systems.
+
+---
+
+## 5. Scalable Coordination
+
+Coordination mechanisms must remain stable as workload volume increases.
+
+The system separates **coordination logic** from **execution capacity**, allowing horizontal scaling without compromising stability.
+
+---
+
+# Kernel Concepts Applied
+
+NexusWaveOS adapts several operating-system design patterns for AI execution governance.
+
+---
+
+## Task Lifecycle Engine
+
+Tasks move through explicit lifecycle stages.
+
+Typical states include:
 
 * queued
 * running
@@ -39,99 +90,126 @@ Tasks progress through defined states:
 * failed
 * blocked
 
-This mirrors process state modeling in traditional kernels.
+This explicit lifecycle enables deterministic orchestration and controlled recovery.
 
 ---
 
-### Priority Scheduler
+## Priority Scheduler
+
+The scheduler arbitrates execution decisions across tasks.
 
 Scheduling decisions incorporate:
 
-* Task priority
-* Dependency resolution
-* Worker availability
-* Fault history
+* task priority
+* dependency relationships
+* worker availability
+* historical fault signals
 
-The scheduler functions as a resource arbitration mechanism rather than a simple queue processor.
-
----
-
-### Journaling Layer (Write-Ahead Log)
-
-State mutation discipline:
-
-1. Persist intent to journal
-2. Apply state transition
-
-Properties:
-
-* Crash-safe recovery
-* Deterministic replay
-* Execution auditability
-* Temporal debugging
+The scheduler therefore acts as a **resource arbitration mechanism**, not simply a queue processor.
 
 ---
 
-### Fault Isolation & Retries
+## Journaling Layer (Write-Ahead Log)
 
-Failure management:
+All state mutations follow a write-ahead discipline.
 
-* Per-task retry budgets
-* Worker failure tracking
-* Adaptive rescheduling
-* Containment boundaries
+The process is:
 
----
+1. Persist execution intent to the journal
+2. Apply the state transition
 
-### Distributed Worker Model
+This design provides several guarantees:
 
-Execution is externalized:
+* crash-safe recovery
+* deterministic replay
+* execution auditability
+* temporal debugging
 
-* Kernel → coordination & control
-* Workers → computation & execution
-
-Benefits:
-
-* Horizontal scaling
-* Failure compartmentalization
-* Execution parallelism
+The journal serves as the authoritative history of system activity.
 
 ---
 
-## Autonomous Behavior Model
+## Fault Isolation and Retries
 
-NexusWaveOS reduces human dependency by embedding:
+Failure handling mechanisms are designed to prevent cascading instability.
 
-* Recovery logic
-* Retry policies
-* Scheduling decisions
-* Health enforcement
+These include:
 
-Human interaction shifts from operational intervention → strategic supervision.
+* per-task retry budgets
+* worker failure tracking
+* controlled retry scheduling
+* containment boundaries between tasks
 
----
-
-## Observability Strategy
-
-System events are treated as first-class objects:
-
-* Execution intent
-* Acknowledgements
-* Failures
-* Retries
-* Recovery events
-
-This enables deterministic reconstruction and forensic debugging.
+Failures therefore remain bounded and manageable.
 
 ---
 
-## Security & Abstraction Strategy
+## Distributed Worker Model
 
-Public materials deliberately:
+Execution responsibilities are separated from coordination logic.
 
-* Avoid exposing execution algorithms
-* Avoid publishing sensitive heuristics
-* Avoid revealing internal optimizations
+**Kernel responsibilities**
 
-The goal is architectural clarity without implementation leakage.
+* coordination
+* scheduling
+* state management
+* lifecycle control
 
+**Worker responsibilities**
+
+* computation
+* tool execution
+* task processing
+
+This separation enables:
+
+* horizontal scalability
+* failure compartmentalization
+* distributed execution capacity
+
+Workers expand execution throughput without increasing orchestration complexity.
+
+---
+
+# Autonomous Behavior Model
+
+NexusWaveOS embeds system-level decision logic directly in the kernel layer.
+
+The system automatically governs:
+
+* retry policies
+* recovery behavior
+* scheduling decisions
+* worker health enforcement
+
+As a result, human operators move away from constant manual intervention and toward strategic supervision of system behavior.
+
+---
+
+# Observability Strategy
+
+Operational insight is achieved through structured system events.
+
+Examples include:
+
+* execution intent
+* worker acknowledgements
+* task failures
+* retry operations
+* recovery events
+
+These events allow deterministic reconstruction of system activity and enable forensic debugging when issues arise.
+
+---
+
+# Security and Abstraction Strategy
+
+Public documentation intentionally focuses on architectural concepts rather than implementation details.
+
+Public materials therefore:
+
+* avoid exposing execution algorithms
+* avoid publishing sensitive heuristics
+* avoid revealing internal optimization strategies
+
+The goal is to provide architectural transparency while protecting proprietary implementation details.
