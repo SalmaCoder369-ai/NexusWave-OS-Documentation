@@ -1,5 +1,8 @@
 # NexusWaveOS — Distributed AI Operating System Kernel Layer
 
+Distributed AI operating system kernel layer for deterministic control, governance enforcement, and failure containment in autonomous AI systems.
+
+
 ## Overview
 
 NexusWaveOS is a distributed AI operating system kernel layer that provides deterministic control, governance enforcement, and failure containment for autonomous AI systems running across distributed infrastructure.
