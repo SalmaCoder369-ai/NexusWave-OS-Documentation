@@ -1,215 +1,98 @@
-# NexusWaveOS — System Design
+# NexusWaveOS — Public Design Principles
 
-## Architectural Positioning
+## Purpose
 
-NexusWaveOS is designed as a **distributed AI operating system kernel layer**.
+NexusWaveOS is designed as long-lived infrastructure for governing AI execution.
 
-Instead of treating AI workflows as application-level automation, NexusWaveOS models them using concepts traditionally associated with operating systems.
+The public design model emphasizes the constraints that shape the system rather than the private mechanisms used to implement them.
 
-Autonomous AI tasks are treated similarly to processes inside an operating system.  
-The kernel coordinates execution, manages lifecycle transitions, and enforces system stability.
+## 1. Deterministic Control
 
-This architectural approach enables:
+Critical system progression should be explainable from authoritative system records.
 
-* predictable execution behavior
-* controlled failure domains
-* crash-safe recovery
-* stable coordination across distributed infrastructure
+NexusWaveOS favors explicit, reproducible control behavior over hidden or implicit progression.
 
-By applying kernel design principles to AI workloads, NexusWaveOS provides a reliable control layer for autonomous AI systems operating in production environments.
+Determinism is treated as an infrastructure property that supports debugging, recovery, auditability, and operational confidence.
 
----
+## 2. Explicit Authority
 
-# Core Design Objectives
+System authority must be unambiguous.
 
-The system is guided by several fundamental design goals.
+Control decisions, execution activity, authoritative state, and operational observation are separated so that a component cannot silently acquire authority simply because it can perform work.
 
-## 1. Execution Determinism
+Ambiguous authority is treated as a reliability risk.
 
-System state transitions must be reproducible.
+## 3. Bounded Execution
 
-Given the same sequence of recorded events, the system must always reconstruct the same state.
+AI-driven execution must be explicitly bounded.
 
-Determinism enables reliable debugging, recovery, and auditing of autonomous workflows.
+Autonomy does not imply unlimited authority, unlimited retries, unlimited duration, or unlimited resource consumption.
 
----
+The system is designed so execution remains subordinate to governance constraints.
 
-## 2. Failure Containment
+## 4. Failure-Normal Operation
 
-Failures must remain localized.
+NexusWaveOS does not assume ideal execution conditions.
 
-Errors originating in one task or worker should not cascade across the broader system.
+Workers can fail. External systems can become unavailable. AI outputs can be incorrect. Partial execution can occur.
 
-Explicit containment boundaries prevent systemic instability.
+The design goal is therefore not to imagine failure away, but to make failure behavior controlled, observable, and recoverable.
 
----
+## 5. Authoritative State
 
-## 3. Crash-Safe Recovery
+System state must have a clear source of authority.
 
-System continuity must never depend on volatile memory.
+Execution activity and observational data must not create competing versions of system truth.
 
-All important state transitions are persisted before execution occurs.
+A stable authority model is necessary for consistent recovery and system reconstruction.
 
-This allows the system to recover safely after crashes or restarts.
+## 6. Observability Without Authority
 
----
+Operational visibility must be rich enough to explain what the system is doing, but observability itself must not become a mutation or decision path.
 
-## 4. Lifecycle Awareness
+This preserves the distinction between seeing system behavior and controlling it.
 
-Work within the system must follow explicit lifecycle states.
+## 7. Human Override
 
-Tasks move through defined transitions that make orchestration predictable and observable.
+Authorized human intervention is a first-class system requirement.
 
-This approach mirrors process lifecycle modeling used in traditional operating systems.
+Human decisions must remain authoritative, attributable, and auditable even when autonomous execution is active.
 
----
+## 8. Governance Before Autonomy
 
-## 5. Scalable Coordination
+NexusWaveOS treats governance as a prerequisite for increasing autonomous capability.
 
-Coordination mechanisms must remain stable as workload volume increases.
+New execution capability should not be introduced by weakening existing safety, authority, or recovery guarantees.
 
-The system separates **coordination logic** from **execution capacity**, allowing horizontal scaling without compromising stability.
+## 9. Recoverability Before Convenience
 
----
+Infrastructure should remain understandable after disruption.
 
-# Kernel Concepts Applied
+Design choices therefore prioritize predictable recovery and stable system state over shortcuts that make normal-path execution easier but failure behavior harder to reason about.
 
-NexusWaveOS adapts several operating-system design patterns for AI execution governance.
+## 10. Controlled Evolution
 
----
+NexusWaveOS is designed to evolve through bounded architectural changes.
 
-## Task Lifecycle Engine
+New mechanisms must remain subordinate to system intent, design principles, invariants, and established authority boundaries.
 
-Tasks move through explicit lifecycle stages.
+Complexity that does not strengthen a required system guarantee is treated as a cost.
 
-Typical states include:
+## Non-Goals
 
-* queued
-* running
-* success
-* failed
-* blocked
+The design does not optimize NexusWaveOS to become:
 
-This explicit lifecycle enables deterministic orchestration and controlled recovery.
+- a feature-centric AI application platform;
+- a general automation builder;
+- a prompt-management product;
+- an agent marketplace;
+- a no-code system;
+- an unrestricted autonomy layer.
 
----
+The primary optimization target is reliable infrastructure behavior.
 
-## Priority Scheduler
+## Public Design Boundary
 
-The scheduler arbitrates execution decisions across tasks.
+This document intentionally describes **principles rather than implementation**.
 
-Scheduling decisions incorporate:
-
-* task priority
-* dependency relationships
-* worker availability
-* historical fault signals
-
-The scheduler therefore acts as a **resource arbitration mechanism**, not simply a queue processor.
-
----
-
-## Journaling Layer (Write-Ahead Log)
-
-All state mutations follow a write-ahead discipline.
-
-The process is:
-
-1. Persist execution intent to the journal
-2. Apply the state transition
-
-This design provides several guarantees:
-
-* crash-safe recovery
-* deterministic replay
-* execution auditability
-* temporal debugging
-
-The journal serves as the authoritative history of system activity.
-
----
-
-## Fault Isolation and Retries
-
-Failure handling mechanisms are designed to prevent cascading instability.
-
-These include:
-
-* per-task retry budgets
-* worker failure tracking
-* controlled retry scheduling
-* containment boundaries between tasks
-
-Failures therefore remain bounded and manageable.
-
----
-
-## Distributed Worker Model
-
-Execution responsibilities are separated from coordination logic.
-
-**Kernel responsibilities**
-
-* coordination
-* scheduling
-* state management
-* lifecycle control
-
-**Worker responsibilities**
-
-* computation
-* tool execution
-* task processing
-
-This separation enables:
-
-* horizontal scalability
-* failure compartmentalization
-* distributed execution capacity
-
-Workers expand execution throughput without increasing orchestration complexity.
-
----
-
-# Autonomous Behavior Model
-
-NexusWaveOS embeds system-level decision logic directly in the kernel layer.
-
-The system automatically governs:
-
-* retry policies
-* recovery behavior
-* scheduling decisions
-* worker health enforcement
-
-As a result, human operators move away from constant manual intervention and toward strategic supervision of system behavior.
-
----
-
-# Observability Strategy
-
-Operational insight is achieved through structured system events.
-
-Examples include:
-
-* execution intent
-* worker acknowledgements
-* task failures
-* retry operations
-* recovery events
-
-These events allow deterministic reconstruction of system activity and enable forensic debugging when issues arise.
-
----
-
-# Security and Abstraction Strategy
-
-Public documentation intentionally focuses on architectural concepts rather than implementation details.
-
-Public materials therefore:
-
-* avoid exposing execution algorithms
-* avoid publishing sensitive heuristics
-* avoid revealing internal optimization strategies
-
-The goal is to provide architectural transparency while protecting proprietary implementation details.
+It does not disclose private algorithms, internal protocols, persistence mechanics, state-transition logic, failure policies, validation systems, or development sequencing.

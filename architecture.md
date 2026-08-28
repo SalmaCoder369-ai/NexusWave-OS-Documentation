@@ -1,215 +1,107 @@
-# NexusWaveOS — System Architecture
+# NexusWaveOS — Public Architecture
+
+## Scope
+
+This document describes the **public architectural model** of NexusWaveOS.
+
+It explains the major responsibility boundaries required to understand the system without exposing internal protocols, algorithms, data structures, implementation modules, recovery logic, or other proprietary mechanisms.
 
 ## System Classification
 
-NexusWaveOS is a distributed AI operating system kernel layer responsible for coordinating autonomous AI execution across distributed infrastructure.
+NexusWaveOS is a **Distributed AI Operating System Kernel Layer**.
 
-It provides a deterministic control substrate that governs how tasks are scheduled, executed, recovered, and observed.
+It sits between business systems and AI execution environments to provide deterministic control, governance enforcement, failure containment, recoverability, and operational visibility.
 
-NexusWaveOS is **not**:
+The architecture is organized around four planes.
 
-* an agent framework
-* a model wrapper
-* an automation script
-* an IDE extension
+## 1. Control Plane
 
-Instead, it operates as an **execution control layer** responsible for reliability, coordination, and state authority.
+The Control Plane owns system-level authority over authorized progression.
 
----
+Its public responsibility is to ensure that AI-driven execution remains governed rather than self-authorizing.
 
-# Architectural Overview
+The Control Plane determines whether work may proceed within defined system constraints. Execution components do not supersede this authority.
 
-The system is structured around a **control-plane-driven architecture** where coordination logic is separated from execution capacity.
+## 2. Execution Plane
 
-Three major architectural domains exist:
+The Execution Plane performs bounded work.
 
-1. Control Plane (authoritative)
-2. Distributed Worker Layer (execution)
-3. Observability Layer (non-authoritative)
+It may interact with models, tools, services, or execution workers, but it does not own authoritative system state.
 
-This separation ensures deterministic orchestration while allowing horizontal scalability.
+This separation allows execution capacity to change independently without transferring system authority to the components performing the work.
 
----
+## 3. State Plane
 
-# 1. Control Plane
+The State Plane represents authoritative system state.
 
-The Control Plane is the **authoritative layer of NexusWaveOS**.
+Its role is to preserve the system record required for consistent reasoning, reconstruction, recovery, and auditability.
 
-It is responsible for:
+Public documentation intentionally does not describe the internal persistence model, transition protocol, storage technology, or commit mechanism.
 
-* command intake and validation
-* task lifecycle management
-* scheduling decisions
-* state mutation control
-* journaling and replay
-* recovery orchestration
+## 4. Observability Plane
 
-All system state transitions originate from the control plane.
+The Observability Plane provides operational visibility.
 
-Workers never mutate state directly.
+It supports inspection of system behavior, failures, health, and execution evidence while remaining non-authoritative.
 
----
+Observability must not become an alternate control or state path.
 
-# 2. Scheduler Layer
+## Plane Separation
 
-The scheduler operates within the control plane and performs task arbitration.
+The four-plane model exists to make authority explicit:
 
-Responsibilities include:
+- **Control** governs progression.
+- **Execution** performs bounded work.
+- **State** preserves authoritative system truth.
+- **Observability** reports system behavior.
 
-* priority arbitration
-* dependency resolution
-* runnable task selection
-* resource-aware dispatch decisions
+No plane should silently inherit the authority of another.
 
-The scheduler ensures stable coordination even under increasing workload pressure.
+This separation reduces ambiguity and supports predictable behavior during failure.
 
----
+## Failure-Normal Architecture
 
-# 3. Journaling Layer
+NexusWaveOS assumes that failures will occur.
 
-The journaling subsystem provides the **authoritative record of system state transitions**.
+Execution capacity may disappear. External services may time out. AI outputs may be incomplete or incorrect. Work may stop after partial progress.
 
-State mutation follows a write-ahead discipline:
+The architecture is therefore designed around controlled response and recoverability rather than assuming uninterrupted execution.
 
-1. Intent is written to the journal
-2. Execution occurs
-3. Outcome is recorded
+The public guarantee is architectural: failures should be contained, visible, and resolved through governed system behavior.
 
-Capabilities enabled by journaling include:
+Internal recovery strategies remain private.
 
-* crash-safe recovery
-* deterministic replay
-* execution auditability
-* forensic debugging
+## Distributed-System Orientation
 
-The journal acts as the system's **source of truth**.
+NexusWaveOS separates execution capacity from system authority.
 
----
+This allows the execution environment to evolve or scale without requiring authoritative control and state responsibilities to move into workers or external systems.
 
-# 4. Execution Dispatch Layer
+The goal is not unrestricted distribution. The goal is controlled distribution with explicit authority boundaries.
 
-The execution layer bridges the control plane and the worker pool.
+## Human Authority
 
-Responsibilities include:
+Human intervention is part of the system architecture, not an exception to it.
 
-* task dispatch
-* worker coordination
-* result normalization
-* acknowledgement processing
+Operator actions must remain authoritative and auditable. Autonomous execution must not override an authorized human decision.
 
-This layer ensures that workers receive execution instructions while maintaining control-plane authority over system state.
+## Abstraction and Security Boundary
 
----
+This public architecture intentionally omits:
 
-# 5. Distributed Worker Layer
+- internal component and module names;
+- command and event schemas;
+- state-machine definitions;
+- persistence and storage details;
+- scheduling and arbitration algorithms;
+- retry and recovery policies;
+- worker coordination protocols;
+- idempotency and concurrency mechanisms;
+- validation and CI enforcement logic;
+- private milestone history and implementation sequencing.
 
-Workers perform the computational execution of tasks.
+Those details belong to the private engineering authority of NexusWaveOS.
 
-Worker responsibilities include:
+## Architectural Objective
 
-* task execution
-* tool invocation
-* acknowledgement emission
-* health signaling
-
-Workers are **non-authoritative components**.
-
-They do not change system state directly and instead emit signals back to the control plane.
-
-This design allows horizontal scaling by expanding the worker pool.
-
----
-
-# 6. Observability Layer
-
-Observability components provide operational visibility without altering system state.
-
-Signals collected may include:
-
-* execution metrics
-* event logs
-* task traces
-* worker health signals
-
-Observability is intentionally **non-authoritative**.
-
-It enables operational insight while preserving deterministic replay guarantees.
-
----
-
-# Execution Flow (Abstracted)
-
-A simplified execution cycle follows these steps:
-
-1. Control plane evaluates system state
-2. Scheduler selects a runnable task
-3. Execution intent is persisted to the journal
-4. Task is dispatched to a worker
-5. Worker executes the task
-6. Worker emits acknowledgement or failure
-7. Outcome recorded in the journal
-8. State transition applied
-
-This flow guarantees that execution decisions remain deterministic and recoverable.
-
----
-
-# Recovery Model
-
-Recovery is journal-driven.
-
-The system follows a strict separation between durable state and transient memory.
-
-* Journal → authoritative state history
-* Memory → transient operational cache
-
-Recovery capabilities include:
-
-* crash-safe boot
-* deterministic state reconstruction
-* replay-based debugging
-
-This model allows the system to rebuild its state entirely from the journal.
-
----
-
-# Scaling Model
-
-NexusWaveOS scales through separation of coordination and execution.
-
-Scaling mechanisms include:
-
-* horizontal expansion of worker nodes
-* deterministic scheduling discipline
-* bounded failure domains
-* distributed task execution
-
-This design ensures that scaling execution capacity does not compromise orchestration stability.
-
----
-
-# Autonomous System Implications
-
-By embedding coordination logic at the kernel layer, NexusWaveOS enables autonomous AI systems to operate reliably without continuous manual intervention.
-
-This architecture supports:
-
-* long-running autonomous workflows
-* reliable multi-step execution pipelines
-* distributed AI coordination
-* stable large-scale task orchestration
-
----
-
-# Abstraction Boundary
-
-Public architecture descriptions intentionally omit implementation-specific details.
-
-These include:
-
-* internal scheduling algorithms
-* optimization heuristics
-* failure policy strategies
-* proprietary coordination logic
-
-
+The objective of NexusWaveOS is to provide a stable infrastructure layer in which increasingly capable AI execution can operate without weakening deterministic control, governance, recoverability, or operational accountability.
