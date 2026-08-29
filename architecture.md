@@ -6,6 +6,12 @@ This document describes the **public architectural model** of NexusWaveOS.
 
 It explains the major responsibility boundaries required to understand the system without exposing internal protocols, algorithms, data structures, implementation modules, recovery logic, or other proprietary mechanisms.
 
+## Architecture Overview
+
+![NexusWaveOS System Architecture](docs/assets/NexusWaveOS%20System%20Architecture.png)
+
+*The public four-plane NexusWaveOS architecture. Internal implementation mechanisms are intentionally omitted.*
+
 ## System Classification
 
 NexusWaveOS is a **Distributed AI Operating System Kernel Layer**.

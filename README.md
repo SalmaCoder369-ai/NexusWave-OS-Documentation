@@ -4,6 +4,12 @@
 
 NexusWaveOS is infrastructure for managing AI execution in production-oriented environments. It provides a deterministic control and governance layer between business systems and AI workloads so execution can remain bounded, observable, recoverable, and operationally accountable as complexity grows.
 
+## System Architecture
+
+![NexusWaveOS System Architecture](docs/assets/NexusWaveOS%20System%20Architecture.png)
+
+*High-level public architecture of the NexusWaveOS Control, Execution, State, and Observability planes.*
+
 > NexusWaveOS is not an AI application layer. It is infrastructure for controlling how AI-driven work is authorized, executed, observed, and recovered.
 
 ## Why NexusWaveOS Exists
